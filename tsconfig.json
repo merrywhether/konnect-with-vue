@@ -1,0 +1,28 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "baseUrl": ".",
+    "importHelpers": true,
+    "jsx": "preserve",
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "noEmit": true,
+    "paths": {
+      "@/*": ["src/*"],
+    },
+    "rootDir": ".",
+    "sourceMap": true,
+    "strict": true,
+    "types": ["vite/client", "node", "vitest/globals"],
+  },
+  "include": [
+    "lib/**/*.ts",
+    "lib/**/*.vue",
+    "server/**/*.ts",
+    "src/**/*.ts",
+    "src/**/*.vue",
+  ],
+  "exclude": ["node_modules", "dist", "mocks"],
+}
