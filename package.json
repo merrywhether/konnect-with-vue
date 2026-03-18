@@ -5,7 +5,7 @@
   "license": "UNLICENSED",
   "type": "module",
   "imports": {
-    "#types": "./server/types.ts",
+    "#types": "./api/_lib/types.ts",
     "#core": "./lib/core/index.ts",
     "#icons": "./lib/icons/index.ts",
     "#common": "./lib/common/index.ts",
@@ -14,10 +14,9 @@
     "#std": "./lib/std/index.ts"
   },
   "scripts": {
-    "dev:server": "node './server/index.ts'",
+    "dev:server": "node './api/_dev.ts'",
     "dev:ui": "vite",
-    "build": "run-s lint stylelint typecheck build:app",
-    "build:app": "vite build -m production",
+    "build": "vite build -m production",
     "preview": "vite preview",
     "test": "cross-env FORCE_COLOR=1 vitest",
     "test:open": "vitest --ui",
@@ -32,9 +31,8 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
-    "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "express": "^4.21.2",
+    "@hono/node-server": "^1.19.11",
+    "hono": "^4.12.8",
     "pinia": "^2.3.1",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"
@@ -48,9 +46,6 @@
     "@playwright/experimental-ct-vue": "1.58.2",
     "@playwright/test": "^1.58.2",
     "@tsconfig/node20": "^20.1.6",
-    "@types/body-parser": "^1.19.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^4.17.23",
     "@types/flat": "^5.0.5",
     "@types/jsdom": "^21.1.7",
     "@types/node": "^20.19.17",
@@ -64,6 +59,7 @@
     "cross-env": "^7.0.3",
     "csstype": "^3.2.3",
     "cz-conventional-changelog": "^3.3.0",
+    "esbuild": "^0.27.4",
     "eslint": "^9.35.0",
     "jsdom": "^25.0.1",
     "npm-run-all": "^4.1.5",

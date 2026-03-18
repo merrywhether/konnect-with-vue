@@ -20,7 +20,7 @@
   "include": [
     "lib/**/*.ts",
     "lib/**/*.vue",
-    "server/**/*.ts",
+    "api/**/*.ts",
     "src/**/*.ts",
     "src/**/*.vue",
   ],

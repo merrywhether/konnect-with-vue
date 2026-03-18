@@ -1,10 +1,11 @@
-import createApp from './app.ts'
+import { serve } from '@hono/node-server'
+import createApp from './_lib/app.ts'
 
 const app = createApp()
 
 const port = 4001
 
-app.listen(port, () => {
+serve({ fetch: app.fetch, port }, () => {
   console.log('')
   console.log(`API server listening on http://localhost:${port}`)
   console.log(

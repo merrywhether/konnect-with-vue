@@ -62,11 +62,11 @@ defineEmits<{
               size="0.6875rem"
               weight="semibold"
             >
-              KE
+              JV
             </CoreText>
           </CoreBox>
         </template>
-        Katherine Ellis
+        Johnny Vampire
       </NavButton>
     </CoreBox>
   </CoreBox>

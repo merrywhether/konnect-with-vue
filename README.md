@@ -2,6 +2,8 @@
 
 An exercise in learning Vue.js by building a toy app and component library.
 
+https://konnect-with-vue.risto.dev
+
 ## Usage
 
 It is recommended that you use [mise](https://mise.jdx.dev) but other runtime managers are supported.
