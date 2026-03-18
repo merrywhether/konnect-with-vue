@@ -1,81 +1,21 @@
-# Welcome
+# Konnect with Vue.js
 
-Please take the time to read through all of the sections below; we want you to do great! :rocket:
+An exercise in learning Vue.js by building a toy app and component library.
 
-Feel free to reach out to your recruiting contact with any questions or concerns.
+## Usage
 
-## Goal
+It is recommended that you use [mise](https://mise.jdx.dev) but other runtime managers are supported.
 
-Modify the provided Vue 3 app to match [this mock](https://www.figma.com/file/swzJVL624G434CVdWi3FLv/Core-UI-Team-Project) as closely as possible while utilizing best-practices to improve the codebase and implement the functional requirements outlined below.
-
-- The provided exercise files are a starting point and they have room for improvement; feel free to modify
-- Don't treat the mock as gospel -- if you see things that don't make sense, ask questions or implement what you think is right
-- In the exercise you are utilizing a local API; however, code your submission as if you are using a production API, accounting for typical issues that can occur
-
-### Links
-
-- Figma Mock: <https://www.figma.com/file/swzJVL624G434CVdWi3FLv/Core-UI-Team-Project>
-- Acceptance criteria: <https://docs.google.com/document/d/1AIXTtrEMZBnfoLYXDlBYiEB-BTk7XNt2QlY7jWYdPv0/edit?tab=t.0#heading=h.8hapmwf98sj>
-
-## Functional Requirements
-
-- [Vue 3](https://vuejs.org/) and TypeScript
-- Please do not use component libraries as the goal is to implement the design and functionality yourself
-- User should be able to view the name, a brief description, versions available, and other info shown in the mock for services
-- User should be able to search for services ([See search endpoint details below](#searching-the-services-endpoint))
-- User should be able to click on a service to view more details
-- User should be able to paginate through services (client-side implementation)
-- The create Service Package button doesn't have to be operable -- interacting with this elements could do nothing, could be fully implemented (stretch goal), or something in between
-- Please update the `README` in the project with a section to describe your design considerations, assumptions, and trade-offs made during this exercise. Also feel free to include any notes about your submission
-
-## Additional Considerations (if applicable)
-
-- The UI should be responsive and look great at different browser viewport sizes
-- Pixel-perfect implementation
-- Routing and views (e.g. navigating to a given service from its card)
-- State management with [Pinia](https://pinia.vuejs.org/)
-- [Component Tests and/or Unit Tests](#run-component-and-unit-tests-with-vitest-and-optionally-vue-test-utils)
-- Other items covered in your Panel 1 interview
-
-## Evaluation
-
-We will review your code for quality and your ability to talk through it, how you approach the UI, and what tradeoffs you make. Specifically we'll be looking at the following:
-
-- How closely your implementation matches the design along with the other [Functional Requirements](#functional-requirements)
-- Code quality, including appropriate componentization and modularity
-- TypeScript usage
-- Coding (and Vue) best-practices
-- The project should pass type checking and build successfully
-- How you dedicate the allotted time to focus on your strengths
-- Test coverage, if applicable
-
-## How to submit the project
-
-You have up to a week to complete the exercise, but we don't expect you to spend more than a few hours on it.
-
-When it's ready, please send your recruiter a link to the source code in a GitHub repository (no Pull Requests).
-
----
-
-## Project Setup
-
-### Clone the repository
+### Setup/Install
 
 ```sh
-git clone git@github.com:Kong/konnect-team-interview-frontend-exercise.git
-```
-
-### pnpm
-
-This repository uses [`pnpm`](https://pnpm.io) rather than `npm` or `yarn`. [See here for instructions on installing pnpm](https://pnpm.io/installation).
-
-### Install dependencies
-
-```sh
+mise trust
+mise install
+corepack enable
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+### Development
 
 Start the backend which serves the `services` API:
 
@@ -89,109 +29,85 @@ In a separate terminal, start the Vue app:
 pnpm dev:ui
 ```
 
-## Searching the services endpoint
+### Analysis/Testing
 
-The local API is available at `http://localhost:4001` after running `pnpm dev:server`.
-
-Searching this endpoint is supported by passing a query string with a value to search with (case-insensitive): `/api/services?q={value}`
-
-**Note**: The search endpoint evaluates all property values as a `string` to determine a match.
-
-### Searchable properties
-
-The search endpoint is configured to search the following fields for each service within the JSON response:
-
-```ts
-{
-  id: string;
-  name: string;
-  description: string;
-  type: string;
-}
-```
-
-### Search example
-
-If I wanted to search for a service with "dogs" in the service name, I would pass the name in the query string:
+Typecheck and lint:
 
 ```sh
-GET: /api/services?q=dogs
-```
-
-### Linting and fixing the code
-
-#### ESLint
-
-```sh
-# Run the linter
-pnpm lint
-
-# Fix linting errors
+pnpm typecheck
 pnpm lint:fix
-```
-
-#### Stylelint
-
-```sh
-# Run stylelint
-pnpm stylelint
-
-# Fix stylelint errors
 pnpm stylelint:fix
 ```
 
-### Run Component and Unit Tests with [Vitest](https://vitest.dev/) and optionally [Vue Test Utils](https://test-utils.vuejs.org/)
-
-Component and unit test files must be located in the `/src/` directory and have a filename format of `*.spec.ts`. In the starter project, see `src/components/ServiceCatalog.spec.ts` for an example.
+Test (unit, component, e2e):
 
 ```sh
-# Run tests
 pnpm test
-
-# or run the tests in the Vitest UI
-pnpm test:open
+pnpm test:ct
+pnpm test:e2e
 ```
 
-### Build and Minify for Production
+## Design Decisions, Assumptions & Trade-offs
 
-```sh
-pnpm build
-```
+### Design
 
-### Preview your built application
+#### Mobile Design
 
-First, you'll need to build the app
+- The mock did not show any mobile layouts, so I adapted these myself. This was mostly a lot of breakpoint work, but the most interesting idea was turning the modal into bottom sheets at mobile screen sizes.
+- The mock showed 9 cards per page, but I switched to 12 cards per page to yield 1 column at mobile widths, 2 even columns at tablet widths, and 3 even columns at desktop+ widths. This enables a better responsive design but also pushes the pagination controls lower on the screen. I added a scroll-to-top on pagination to overcome this, but it does make it hard to quickly page through the list on anything but tall screens.
 
-```sh
-pnpm build
-```
+#### Other Fun Additions 
 
-Next, run the API server
+- The service detail view shows the service name as the header, differing from the mock. It is otherwise confusing what you're looking at when presented as a modal.
+- The catalog cards are animated during enter/exit. They appear with a tiny stagger, and cards that persist across views slide to their new position.
+- I used skeleton layouts as the loading UI, and added randomized widths to the text-placeholder bars to create a more natural feel.
+- The mock only showed a design for the published service state, which I adapted to handle the other states instead of assuming they didn't get detail views at all.
+- I gave the top-nav elements hover states, including the logo. 😀
+- For the empty and error states I generated coordinated images for a bit of personality.
 
-```sh
-pnpm dev:server
-```
+### Code
 
-Now run the `preview` command
+#### Pseudo Packages
 
-```sh
-pnpm preview
-```
+I used subpath imports in package.json to mimic creating proper packages for a component library. This enforced boundaries between layers and intentional grouping of concerns, similar to a real monorepo.
 
-### Committing Changes
+#### Type-Safe Themes
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+- I chose to use CSS Custom Properties to manage propagating theme values throughout the component tree, but I wanted to see how that might work in a type-safe way in Vue. This was a little difficult given the extensive interfacing with CSS/SCSS, so it's definitely not perfect and I'd be curious to see other common patterns within the Vue ecosystem. 
+- For the core reusable primitives like `<CoreBox>`, I experimented with filling out their props API to see how that fit into type-safety, and the external API worked quite well but resulted in lots of inline styles which wasn't necessarily ideal (repetition, specificity wars, etc). My default opinion for starting a components ecosystem for a project/entity would be to try to greatly limit the amount of CSS that consumers write alongside the components, but that feels a bit like fighting against Vue, especially given APIs like default passthrough attributes. Type-safety also gets hard as soon as you start to deal with responsive design and augmenting behavior at breakpoints.
+- I would have preferred to remove SCSS entirely as modern CSS is sufficient for most functionality, but media queries forced me into using a few SCSS variables for media-query breakpoints (at least until `@custom-media` gets to baseline).
+- The theme package introduced a theme object structure and provide/inject functionality to enable custom theming and runtime light/dark mode switching (not yet implemented). I tried to retrofit generalized names for the various tokens from the designs, but it would obviously be easier to start from the other direction. Some tokens were one-offs or had no obvious names and thus are hard-coded instead of being shoe-horned into the theme.
 
-At Kong, we utilize [Conventional Commits](https://www.conventionalcommits.org/) in all of our repositories. [Commitizen](https://github.com/commitizen/cz-cli) can be used to to help build and enforce commit messages.
+#### Server Extensions
 
-If you're unfamiliar with conventional commits, it is **recommended** to use the following command in order to create your commits:
+I updated the server with a few new capabilities:
+- I added degradation simulation to the server to artificially make it be slow or throw an error. This included adding a dev settings route to configure these behaviors from the UI (available via the coopted settings menu in the top nav).
+- Instead of doing pagination in the client by slicing against the entire data blob in the client, I added pagination support to the GET endpoint for a more realistic production simulation. I didn't build any serious caching logic for the client to merge and manage the list, but options ranging from approaches like `swr` to a fully-normalized cache would easily fit into the data flow of the app. But for this project, I was more interested in building out the loading and error experiences via the degradation functionality.
+- I added a GET/POST endpoint for individual services to power the service details view and the service creation workflow. This integrated with the mock data generation to hydrate new entries.
+- I expanded the tsconfig to include the server code and created full types for the data, which are then shared with the client for end-to-end type-safety like a cheap imitation of tRPC.
 
-```sh
-# Stage your changes
-git add -A
+#### Client State
 
-# Trigger the commitizen CLI to help compose your commit message
-pnpm commit
-```
+- All navigation state is stored in the URL, allowing direct navigation to service details and search/pagination results. Having the service details be a modal over the catalog (via a nested route) creates an interesting interaction between preserving search position and detail navigation. I chose the simple path of preserving search/pagination behind the details to make the common case of browse+click+dismiss work as expected, but it gives rise to interesting edge cases that might be addressed for product reasons (e.g. can view a details over a grid that doesn't include the relevant service). But having the page state persist through navigation is good for both UX and development.
+- The state in the client store is relatively simple, maintaining a discriminated union of loading/success/error states. The store handles fetching the catalog data, and has some minor fanciness in retaining the old data for 100ms to give an opportunity for the new data to return for an immediate swap before transitioning to a loading UI (similar to deferred Suspense transitions).
 
-This will trigger the Commitizen interactive prompt for building your commit message.
+#### Testing
+
+- The testing strategy in this project is top-down, preferring colocated Playwright end-to-end tests to exercise large vertical slices that correspond most closely to real behavior and avoid the extensive mocking present in `jsdom`-based tests. Below this are Playwright component tests for more focused tests while still in a browser (leveraged for the complex behavior of the `<BaseModal>` component). Unit tests cover the last layer for pure functions and simpler leaf components.
+- All tests target user-facing selectors like text or a11y attributes. There are no selectors based on DOM attributes directly.
+- As implied above, Cypress was removed in favor of Playwright.
+
+#### Other Notes
+
+- I used the modern `<script setup>` pattern with the TypeScript-y macros (e.g. `defineProps<{...}>()`), updating from the example `defineComponent()` pattern.
+- Axios was removed in favor of native fetch + AbortController.
+- I changed the path to `/services` partly to support the logo resetting navigation state through the `/` redirect.
+- Node/pnpm versions were bumped, along with adding mise config. Other configs were also updated and/or streamlined.
+
+## Follow-ups
+
+Given more time, I would try these next:
+- a dark theme and light/dark/system theme picker for users
+- token-based search to enable targeting specific data fields, combined with the classic pill UI in the search bar
+- improved caching of fetched data, experimenting with some kind of lazily-hydrated normalization layer
+- deploy to live hosting with persistent storage

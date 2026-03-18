@@ -13,7 +13,6 @@ export default mergeConfig(
         './dist/**',
         'node_modules',
       ],
-      setupFiles: ['./vitest.setup.ts'],
       root: fileURLToPath(new URL('./', import.meta.url)),
       deps: {
         optimizer: {
