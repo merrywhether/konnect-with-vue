@@ -1,0 +1,3 @@
+[tools]
+node = "24.14.0"
+# pnpm is managed via corepack — see packageManager in package.json

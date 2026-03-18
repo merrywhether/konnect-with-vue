@@ -1,13 +1,18 @@
 import eslintKongUiConfig from '@kong/eslint-config-kong-ui'
-import eslintKongUiConfigCypress from '@kong/eslint-config-kong-ui/cypress'
 
 export default [
-  ...eslintKongUiConfig,
-  ...eslintKongUiConfigCypress.map(config => ({
-    ...config,
-    files: [
-      '**/cypress/**',
-      '**/*.cy.{js,ts,jsx,tsx}',
+  {
+    ignores: [
+      'playwright/.cache/**',
+      'test-results/**',
+      'playwright-report/**',
     ],
-  })),
+  },
+  ...eslintKongUiConfig,
+  // @typescript-eslint/recommended disables no-undef for .ts/.tsx but not .vue.
+  // TypeScript handles undeclared identifiers in all three, so mirror that here.
+  {
+    files: ['**/*.vue'],
+    rules: { 'no-undef': 'off' },
+  },
 ]
