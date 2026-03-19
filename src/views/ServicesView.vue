@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import DevSettingsModal from '@/components/DevSettingsModal.vue'
+import SettingsModal from '@/components/settings-modal/SettingsModal.vue'
 import NavBar from '@/components/nav/NavBar.vue'
 import CreateServiceModal from '@/components/create-service/CreateServiceModal.vue'
 import ServiceCatalog from '@/components/services-catalog/ServiceCatalog.vue'
@@ -12,7 +12,7 @@ const router = useRouter()
 const store = useServicesStore()
 
 const showCreateModal = ref(false)
-const showDevSettings = ref(false)
+const showSettings = ref(false)
 
 const searchQuery = ref(String(route.query.q || ''))
 const currentPage = computed(() => Number(route.query.page || 1))
@@ -100,7 +100,7 @@ watch(
 
 <template>
   <div class="app-layout">
-    <NavBar @settings="showDevSettings = true" />
+    <NavBar @settings="showSettings = true" />
     <main class="main-content">
       <ServiceCatalog
         :page="currentPage"
@@ -128,9 +128,9 @@ watch(
       @created="onServiceCreated($event)"
     />
 
-    <DevSettingsModal
-      :open="showDevSettings"
-      @close="showDevSettings = false"
+    <SettingsModal
+      :open="showSettings"
+      @close="showSettings = false"
     />
   </div>
 </template>

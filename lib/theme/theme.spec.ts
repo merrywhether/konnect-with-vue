@@ -1,5 +1,5 @@
 import { themePlugin } from './index'
-import { defaultTheme } from './default-theme'
+import { defaultLightTheme } from './default-light-theme'
 
 const app = { provide: vi.fn() }
 
@@ -14,25 +14,25 @@ describe('themePlugin', () => {
 
     const root = document.documentElement
     expect(root.style.getPropertyValue('--color-button-primary')).toBe(
-      defaultTheme.colors.buttonPrimary,
+      defaultLightTheme.colors.buttonPrimary,
     )
     expect(root.style.getPropertyValue('--spacing-xl')).toBe(
-      defaultTheme.spacing.xl,
+      defaultLightTheme.spacing.xl,
     )
     expect(root.style.getPropertyValue('--font-weight-semibold')).toBe(
-      String(defaultTheme.typography.weights.semibold),
+      String(defaultLightTheme.typography.weights.semibold),
     )
   })
 
   it('applies partial overrides without disturbing adjacent tokens', () => {
-    themePlugin.install(app as any, { colors: { buttonPrimary: '#FF0000' } })
+    themePlugin.install(app as any, { light: { colors: { buttonPrimary: '#FF0000' } } })
 
     const root = document.documentElement
     expect(root.style.getPropertyValue('--color-button-primary')).toBe(
       '#FF0000',
     )
     expect(root.style.getPropertyValue('--color-text-primary')).toBe(
-      defaultTheme.colors.textPrimary,
+      defaultLightTheme.colors.textPrimary,
     )
   })
 })

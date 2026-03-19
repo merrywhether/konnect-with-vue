@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { CoreBox, CoreButton, CoreText } from '#core'
+import { ThemedImage } from '#theme'
 import CreateServiceButton from '../create-service/CreateServiceButton.vue'
 
 defineProps<{
@@ -21,11 +22,11 @@ defineEmits<{
     display="flex"
     gap="md"
   >
-    <img
-      alt=""
+    <ThemedImage
       class="empty-img"
-      src="/lost_kong.png"
-    >
+      dark-src="/404_dark.png"
+      light-src="/404_light.png"
+    />
     <CoreText
       as="p"
       size="lg"

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { CoreBox, CoreButton, CoreText } from '#core'
+import { ThemedImage } from '#theme'
 
 withDefaults(
   defineProps<{
@@ -26,11 +27,11 @@ defineEmits<{
     display="flex"
     gap="sm"
   >
-    <img
-      alt=""
+    <ThemedImage
       class="error-illustration"
-      src="/magic_kong.png"
-    >
+      dark-src="/500_dark.png"
+      light-src="/500_light.png"
+    />
     <CoreText
       as="p"
       size="md"

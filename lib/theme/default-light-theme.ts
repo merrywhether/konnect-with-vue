@@ -1,6 +1,6 @@
 import type { Theme } from './types'
 
-export const defaultTheme: Theme = {
+export const defaultLightTheme: Theme = {
   colors: {
     // Text scale
     textPrimary: '#3C4557', // Figma Grey/0 and Grey/600

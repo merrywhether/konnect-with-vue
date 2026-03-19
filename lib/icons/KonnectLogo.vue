@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+import { computed } from 'vue'
+import { useThemeMode } from '#theme'
+
 withDefaults(
   defineProps<{
     width?: number
@@ -9,6 +12,9 @@ withDefaults(
     height: 26,
   },
 )
+
+const { resolvedMode } = useThemeMode()
+const isDark = computed(() => resolvedMode.value === 'dark')
 </script>
 
 <template>
@@ -19,30 +25,33 @@ withDefaults(
     :width="width"
     xmlns="http://www.w3.org/2000/svg"
   >
+    <!-- Gorilla mark — flat chartreuse in dark mode, brand teal/green in light -->
     <path
       clip-rule="evenodd"
       d="M27.2372 21.8771L27.9324 20.9797H33.0762L35.7573 24.4063L35.2807 25.569H28.6473L28.8062 24.4063L27.2372 21.8771Z"
-      fill="#169FCC"
+      :fill="isDark ? '#CCFF00' : '#169FCC'"
       fill-rule="evenodd"
     />
     <path
       clip-rule="evenodd"
       d="M28.8097 10.1929L31.2934 5.90054H34.1877L47.1606 20.9743L46.1548 25.569H40.5921L40.941 24.2793L28.8097 10.1929Z"
-      fill="#14B59A"
+      :fill="isDark ? '#CCFF00' : '#14B59A'"
       fill-rule="evenodd"
     />
     <path
       clip-rule="evenodd"
       d="M31.8251 5.08499L33.0144 2.88495L36.5822 0L42.6955 4.79442L41.9027 5.60387L42.9667 7.07748V8.65486L39.9205 11.1455L34.8087 5.08499H31.8251Z"
-      fill="#1BC263"
+      :fill="isDark ? '#CCFF00' : '#1BC263'"
       fill-rule="evenodd"
     />
     <path
       clip-rule="evenodd"
       d="M22.3775 14.6712H23.9934L28.207 11.1455L33.791 17.6361L32.216 20H27.0615L23.5025 24.5273L22.6843 25.569H18.0616V20.02L22.3775 14.6712Z"
-      fill="#16BDCC"
+      :fill="isDark ? '#CCFF00' : '#16BDCC'"
       fill-rule="evenodd"
     />
+
+    <!-- Wordmark — currentColor so it inherits nav text color + hover transition -->
     <path
       clip-rule="evenodd"
       d="M85.1303 5.59386C86.6794 5.59386 87.3976 5.80104 87.9575 6.29401C88.8553 7.0526 89.5066 8.36792 89.5066 12.7845C89.5066 17.1809 88.8553 18.4952 87.9575 19.2761C87.3976 19.7691 86.6794 19.9752 85.1303 19.9752H80.2611C78.7131 19.9752 77.996 19.7691 77.435 19.2761C76.5372 18.4952 75.887 17.1809 75.887 12.7845C75.887 8.36792 76.5372 7.0526 77.435 6.29401C77.996 5.80104 78.7131 5.59386 80.2611 5.59386H85.1303ZM80.1273 17.1193C80.2845 17.2426 80.4864 17.3042 81.2046 17.3042H84.1879C84.9062 17.3244 85.108 17.2426 85.2653 17.1193C85.4671 16.9344 85.7593 16.4213 85.7593 12.7845C85.7593 9.12863 85.4671 8.6144 85.2653 8.44972C85.108 8.30629 84.9062 8.24361 84.1879 8.24361H81.2046C80.4864 8.24361 80.2845 8.30629 80.1273 8.44972C79.9254 8.6144 79.6343 9.12863 79.6343 12.7845C79.6343 16.4404 79.9254 16.9344 80.1273 17.1193Z"
