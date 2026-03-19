@@ -61,7 +61,7 @@ const emit = defineEmits<{
         >
           Organize services, manage and track versioning and API
           service documentation.
-          <a href="#">Learn more</a>
+          <a href="https://github.com/merrywhether/konnect-with-vue/" rel="noopener noreferrer" target="_blank">Learn more</a>
         </CoreText>
       </CoreBox>
 
